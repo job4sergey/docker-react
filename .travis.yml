@@ -3,19 +3,18 @@ services:
   - docker
 
 before_install:
-  - docker build -t asilva/docker-react -f Dockerfile.dev .
+  - docker build -t job4sergey/docker-react -f Dockerfile.dev .
 
 script:
-  - docker run asilva/docker-react npm run test -- --coverage
-
-deploy:
-  provider: elasticbeanstalk
-  region: "us-east-1"
-  app: "docker-react"
-  env: "DockerReact-env"
-  bucket_name: "elasticbeanstalk-us-east-1-677505090583"
-  bucket_path: "docker-react"
-  on:
-    branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: "$AWS_SECRET_KEY"
+  - docker run -e CI=true job4sergey/docker-react npm run test
+# deploy:
+#   provider: elasticbeanstalk
+#   region: "us-east-1"
+#   app: "docker-react"
+#   env: "DockerReact-env"
+#   bucket_name: "elasticbeanstalk-us-east-1-677505090583"
+#   bucket_path: "docker-react"
+#   on:
+#     branch: master
+#   access_key_id: $AWS_ACCESS_KEY
+#   secret_access_key: "$AWS_SECRET_KEY"
